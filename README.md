@@ -2,7 +2,9 @@
 
 ## Dependencies
 Vim 7.4+ with Lua support
+
 Git
+
 Exuberant Ctags
 
 ### Font

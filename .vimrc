@@ -32,7 +32,7 @@ set showmatch           " Briefly jump to a paren once it's balanced
 "set nowrap             " don't wrap text
 set linebreak           " don't wrap textin the middle of a word
 set autoindent          " always set autoindenting on
-set breakindent         " indent wrapped text
+silent! set breakindent " indent wrapped text
 set showbreak=-->       " better show of wrapped text
 set tabstop=4           " <tab> inserts 4 spaces
 set shiftwidth=4        " but an indent level is 2 spaces wide.
@@ -176,8 +176,6 @@ let perl_sync_dist     = 250  "use more context for highlighting
 au BufRead,BufNewFile *.tpl set filetype=perl
 au BufRead,BufNewFile *.ipl set filetype=perl
 au BufRead,BufNewFile *.cgi set filetype=perl
-
-autocmd filetype lisp,racket,scheme setlocal equalprg=scmindent
 """<<< Perl syntax
 
 
@@ -296,6 +294,9 @@ let g:syntastic_check_on_wq = 0
 " ==========================================================
 " Custom Mappings
 " ==========================================================
+
+" Scheme indentation
+silent! autocmd filetype lisp,racket,scheme setlocal equalprg=scmindent
 
 " Paste from clipboard
 map <leader>p "+p
