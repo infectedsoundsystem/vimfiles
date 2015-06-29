@@ -139,10 +139,9 @@ NeoBundle 'github:c9s/perlomni.vim' " perl omni completion
 NeoBundle 'github:vim-perl/vim-perl' " perl syntax etc
 NeoBundle 'github:StanAngeloff/php.vim' " php syntax etc
 NeoBundle 'github:Aluriak/nerdcommenter' " easy line commenting
-NeoBundle 'github:majutsushi/tagbar' " browse ctags-generated tags
-NeoBundleLazy 'github:bling/vim-airline' " better status/tabline
+"NeoBundle 'github:majutsushi/tagbar' " browse ctags-generated tags
 NeoBundle 'github:etdev/vim-hexcolor' " css colour highlight
-NeoBundle 'github:tpope/vim-fugitive' " git wrapper
+"NeoBundle 'github:tpope/vim-fugitive' " git wrapper
 NeoBundle 'github:pangloss/vim-javascript' " js syntax/indenting
 NeoBundle 'github:nathanaelkane/vim-indent-guides' " indentation guides
 NeoBundle 'github:elzr/vim-json' " json highlighting etc
@@ -155,6 +154,10 @@ NeoBundle 'github:vim-scripts/XSLT-syntax' " XSLT syntax highlighting
 " Syntax checking, requires external syntax checkers:
 " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
 NeoBundle 'github:scrooloose/syntastic'
+" better status/tabline
+NeoBundle 'github:bling/vim-airline', {'depends' :
+    \ ['github:majutsushi/tagbar', 'github:tpope/vim-fugitive']
+    \ }
 
 call neobundle#end()
 NeoBundleSource
