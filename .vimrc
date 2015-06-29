@@ -87,7 +87,7 @@ set undofile            " Turns on persistent undo
 
 " GUI settings
 if has("gui_running")
-    set lines=60 columns=100
+    set lines=65 columns=100
     set guioptions-=T       " remove toolbar
     if has("win32")
         set guifont=Droid_Sans_Mono_Slashed:h10
@@ -151,6 +151,7 @@ NeoBundle 'github:hynek/vim-python-pep8-indent' " correct Python indentation
 NeoBundle 'github:iynaix/django.vim' " django template syntax highlighting
 NeoBundle 'github:tpope/vim-surround' " easily change surroundings
 NeoBundle 'github:vim-scripts/XSLT-syntax' " XSLT syntax highlighting
+NeoBundle 'github:fatih/vim-go' " Go (golang) support
 " Syntax checking, requires external syntax checkers:
 " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
 NeoBundle 'github:scrooloose/syntastic'
@@ -160,9 +161,8 @@ NeoBundle 'github:bling/vim-airline', {'depends' :
     \ }
 
 call neobundle#end()
-NeoBundleSource
 
-" @todo: Being undone somewhere, debug later
+" Disabled by NeoBundle, re-enable
 syntax on
 filetype on             " try to detect filetypes
 filetype plugin indent on   " enable loading indent file for filetype
@@ -283,6 +283,14 @@ let g:airline#extensions#tabline#enabled = 1
 """<<< Airline
 
 
+""">>> vim-go
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+"""<<< vim-go
+
 """>>> Syntastic
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -291,6 +299,7 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_python_flake8_args='--ignore=E501'
 """<<< Syntastic
 
 
