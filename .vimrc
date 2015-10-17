@@ -145,7 +145,6 @@ NeoBundle 'github:etdev/vim-hexcolor' " css colour highlight
 NeoBundle 'github:pangloss/vim-javascript' " js syntax/indenting
 NeoBundle 'github:nathanaelkane/vim-indent-guides' " indentation guides
 NeoBundle 'github:elzr/vim-json' " json highlighting etc
-NeoBundle 'github:joshtch/matchit.zip' " % matches more
 NeoBundle 'github:terryma/vim-multiple-cursors' " Sublime-like multiple cursors
 NeoBundle 'github:hynek/vim-python-pep8-indent' " correct Python indentation
 NeoBundle 'github:iynaix/django.vim' " django template syntax highlighting
@@ -302,6 +301,10 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_python_flake8_args='--ignore=E501'
 """<<< Syntastic
 
+""">>> Matchit
+" % matches more - use version bundled with Vim
+runtime macros/matchit.vim
+"""<<< Matchit
 
 " ==========================================================
 " Custom Mappings
@@ -317,6 +320,9 @@ map <leader>y "+y
 " Select all
 map <leader>a ggVG
 
+" jk to return to normal mode from insert mode
+inoremap jk <Esc>
+
 " Remove trailing whitespace on <leader>S
 nnoremap <leader>S :%s/\s\+$//<cr>:let @/=''<CR>
 
@@ -327,7 +333,8 @@ map <c-l> <c-w>l
 map <c-h> <c-w>h
 " and lets make these all work in insert mode too ( <C-O> makes next cmd
 " happen as if in command mode )
-imap <C-W> <C-O><C-W>
+" Disabled - interferes with deleting back one word
+"imap <C-W> <C-O><C-W> 
 
 " clear search
 command C let @/=""
