@@ -231,18 +231,15 @@ if (has("lua"))
     " <CR>: close popup and save indent.
     inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
     function! s:my_cr_function()
-        "return neocomplete#smart_close_popup() . "\<CR>"
-        return neocomplete#close_popup() . "\<CR>"
+        return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
         " For no inserting <CR> key.
-        "return pumvisible() ? neocomplete#close_popup() : "\<CR>"
+        "return pumvisible() ? "\<C-y>" : "\<CR>"
     endfunction
     " <TAB>: completion.
     inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
     " <C-h>, <BS>: close popup and delete backword char.
     inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
     inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><C-y>  neocomplete#close_popup()
-    inoremap <expr><C-e>  neocomplete#cancel_popup()
 
     " Enable omni completion.
     autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -253,7 +250,7 @@ if (has("lua"))
 
     " Enable heavy omni completion.
     if !exists('g:neocomplete#sources#omni#input_patterns')
-    let g:neocomplete#sources#omni#input_patterns = {}
+        let g:neocomplete#sources#omni#input_patterns = {}
     endif
     let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
     let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
@@ -334,6 +331,7 @@ else
     let g:neocomplcache_force_omni_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
     " For perlomni.vim setting.
     let g:neocomplcache_force_omni_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+    """<<< NeoComplCache
 
     """>>> Multiple Cursors
     " Multiple cursors neocomplete conflict resolution
