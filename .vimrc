@@ -104,12 +104,9 @@ endif
 if has("win32")
     set runtimepath+=$HOME/vimfiles/bundle/neobundle.vim/
     call neobundle#begin(expand('$HOME/vimfiles/bundle/'))
-    " Assume behind proxy if being forced to use Windows
-    let g:neobundle#types#git#default_protocol = 'https'
 else
     set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
     call neobundle#begin(expand('~/.vim/bundle/'))
-    let g:neobundle#types#git#default_protocol = 'git'
 endif
 
 " Let NeoBundle manage NeoBundle
