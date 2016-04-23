@@ -29,6 +29,9 @@ ln -s $DIR/.vimrc $HOME/.vimrc
 mkdir $HOME/.vim/bundle
 mkdir $HOME/.vim/temp
 
+# If needing to reinstall, ensure bundle dir is empty
+rm -rf $HOME/.vim/bundle/*
+
 # Get NeoBundle
 git clone https://github.com/Shougo/neobundle.vim $HOME/.vim/bundle/neobundle.vim
 

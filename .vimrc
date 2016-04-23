@@ -157,9 +157,10 @@ NeoBundle 'github:fatih/vim-go' " Go (golang) support
 " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
 NeoBundle 'github:scrooloose/syntastic'
 " better status/tabline
-NeoBundle 'github:bling/vim-airline', {'depends' :
+NeoBundle 'github:vim-airline/vim-airline', {'depends' :
     \ ['github:majutsushi/tagbar', 'github:tpope/vim-fugitive']
     \ }
+NeoBundle 'github:vim-airline/vim-airline-themes' " airline themes
 
 call neobundle#end()
 
