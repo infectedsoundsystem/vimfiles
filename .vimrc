@@ -92,7 +92,11 @@ if has("gui_running")
     if has("win32")
         set guifont=Droid_Sans_Mono_Slashed:h10
     else
-        set guifont=Droid\ Sans\ Mono\ Slashed\ 10
+        " Use powerline-patched font if available
+        silent! set guifont=Droid\ Sans\ Mono\ Slashed\ for\ Powerline\ 10
+        if &guifont != 'Droid Sans Mono Slashed for Powerline 10'
+            set guifont=Droid\ Sans\ Mono\ Slashed\ 10
+        endif
     endif
 endif
 
@@ -357,7 +361,7 @@ endif
 
 """>>> Airline
 let g:airline#extensions#tabline#enabled = 1
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 """<<< Airline
 
 
