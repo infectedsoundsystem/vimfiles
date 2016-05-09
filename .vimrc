@@ -156,6 +156,9 @@ NeoBundle 'github:fatih/vim-go' " Go (golang) support
 " Syntax checking, requires external syntax checkers:
 " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
 NeoBundle 'github:scrooloose/syntastic'
+if !has('nvim')
+    NeoBundle 'github:ConradIrwin/vim-bracketed-paste' " Transparent pasting
+endif
 " better status/tabline
 NeoBundle 'github:vim-airline/vim-airline', {'depends' :
     \ ['github:majutsushi/tagbar', 'github:tpope/vim-fugitive']
