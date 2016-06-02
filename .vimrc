@@ -390,6 +390,11 @@ let g:syntastic_loc_list_height = 5
 runtime macros/matchit.vim
 """<<< Matchit
 
+""">>> NerdCommenter
+" Align all comment delimiters to flush left
+let g:NERDDefaultAlign = 'left'
+"""<<< NerdCommenter
+
 " ==========================================================
 " Custom Mappings
 " ==========================================================
