@@ -168,8 +168,9 @@ NeoBundle 'github:vim-airline/vim-airline', {'depends' :
     \ ['github:majutsushi/tagbar', 'github:tpope/vim-fugitive']
     \ }
 NeoBundle 'github:vim-airline/vim-airline-themes' " airline themes
-NeoBundle 'juliosueiras/vim-terraform-completion', {'depends' :
-    \ ['hashivim/vim-terraform']
+" Terraform highlighting/completion
+NeoBundle 'github:juliosueiras/vim-terraform-completion', {'depends' :
+    \ ['github:hashivim/vim-terraform']
     \ }
 
 call neobundle#end()
