@@ -172,6 +172,7 @@ NeoBundle 'github:vim-airline/vim-airline-themes' " airline themes
 NeoBundle 'github:juliosueiras/vim-terraform-completion', {'depends' :
     \ ['github:hashivim/vim-terraform']
     \ }
+NeoBundle 'github:pearofducks/ansible-vim' " Ansible highlighting
 
 call neobundle#end()
 
