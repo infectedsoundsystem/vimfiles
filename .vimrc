@@ -168,6 +168,9 @@ NeoBundle 'github:vim-airline/vim-airline', {'depends' :
     \ ['github:majutsushi/tagbar', 'github:tpope/vim-fugitive']
     \ }
 NeoBundle 'github:vim-airline/vim-airline-themes' " airline themes
+NeoBundle 'juliosueiras/vim-terraform-completion', {'depends' :
+    \ ['hashivim/vim-terraform']
+    \ }
 
 call neobundle#end()
 
@@ -356,14 +359,10 @@ else
     """<<< Multiple Cursors
 endif
 
-
-
-
 """>>> Airline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_powerline_fonts = 1
 """<<< Airline
-
 
 """>>> vim-go
 let g:go_highlight_functions = 1
@@ -394,6 +393,12 @@ runtime macros/matchit.vim
 " Align all comment delimiters to flush left
 let g:NERDDefaultAlign = 'left'
 """<<< NerdCommenter
+
+""">>> Terraform
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+let g:syntastic_terraform_tffilter_plan = 1
+"""<<< Terraform
 
 " ==========================================================
 " Custom Mappings
