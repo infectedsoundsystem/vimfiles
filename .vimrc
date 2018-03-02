@@ -113,86 +113,105 @@ endif
 " Plugin Settings
 " ==========================================================
 
-""">>> NeoBundle
+""">>> Dein plugin manager
 if has("win32")
-    set runtimepath+=$HOME/vimfiles/bundle/neobundle.vim/
-    call neobundle#begin(expand('$HOME/vimfiles/bundle/'))
+    set runtimepath+=$HOME/vimfiles/bundle/repos/github.com/Shougo/dein.vim
+    let deindir="$HOME/vimfiles/bundle/repos/github.com/Shougo/dein.vim"
+    let bundledir="$HOME/vimfiles/bundle/"
 else
-    set runtimepath+=$HOME/.vim/bundle/neobundle.vim/
-    call neobundle#begin(expand('~/.vim/bundle/'))
+    set runtimepath+=$HOME/.vim/bundle/repos/github.com/Shougo/dein.vim
+    let deindir="$HOME/.vim/bundle/repos/github.com/Shougo/dein.vim"
+    let bundledir="$HOME/.vim/bundle/"
 endif
 
-" Let NeoBundle manage NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
+if dein#load_state(bundledir)
+    call dein#begin(bundledir)
 
-" My Bundles
-" Vimproc - async execution. Check build tools installed else ignore
-if (has("win32") == 0 && (executable("make") || executable("gmake"))) || (has("win32") && (executable("mingw32-make") || executable("make")))
-    NeoBundle 'Shougo/vimproc.vim', {
-    \ 'build' : {
-    \     'windows' : 'tools\\update-dll-mingw',
-    \     'cygwin' : 'make -f make_cygwin.mak',
-    \     'mac' : 'make -f make_mac.mak',
-    \     'linux' : 'make',
-    \     'unix' : 'gmake',
-    \    },
-    \ }
-endif
-NeoBundle 'github:jnurmine/Zenburn' " Zenburn color scheme
-NeoBundle 'github:Raimondi/delimitMate' " delimiter closing
-NeoBundle 'github:othree/html5.vim' " HTML5 syntax etc
-NeoBundle 'github:Shougo/unite.vim' " file/buffer/etc navigation
-" Neocomplete if vim is built with lua (desired), neocomplcache if not
-if (has("lua"))
-    NeoBundle 'github:Shougo/neocomplete' " completion
-else
-    NeoBundle 'github:Shougo/neocomplcache' " completion
-endif
-NeoBundle 'github:chrisbra/NrrwRgn' " opens selected in split window
-NeoBundle 'github:hotchpotch/perldoc-vim' " interface to perldoc
-NeoBundle 'github:c9s/perlomni.vim' " perl omni completion
-NeoBundle 'github:vim-perl/vim-perl' " perl syntax etc
-NeoBundle 'github:StanAngeloff/php.vim' " php syntax etc
-NeoBundle 'github:Aluriak/nerdcommenter' " easy line commenting
-"NeoBundle 'github:majutsushi/tagbar' " browse ctags-generated tags
-NeoBundle 'github:etdev/vim-hexcolor' " css colour highlight
-"NeoBundle 'github:tpope/vim-fugitive' " git wrapper
-NeoBundle 'github:pangloss/vim-javascript' " js syntax/indenting
-NeoBundle 'github:nathanaelkane/vim-indent-guides' " indentation guides
-NeoBundle 'github:elzr/vim-json' " json highlighting etc
-NeoBundle 'github:terryma/vim-multiple-cursors' " Sublime-like multiple cursors
-NeoBundle 'github:hynek/vim-python-pep8-indent' " correct Python indentation
-NeoBundle 'github:iynaix/django.vim' " django template syntax highlighting
-NeoBundle 'github:tpope/vim-surround' " easily change surroundings
-NeoBundle 'github:vim-scripts/XSLT-syntax' " XSLT syntax highlighting
-NeoBundle 'github:fatih/vim-go' " Go (golang) support
-" Syntax checking, requires external syntax checkers:
-" https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
-NeoBundle 'github:scrooloose/syntastic'
-if !has('nvim')
-    NeoBundle 'github:ConradIrwin/vim-bracketed-paste' " Transparent pasting
-endif
-" better status/tabline
-NeoBundle 'github:vim-airline/vim-airline', {'depends' :
-    \ ['github:majutsushi/tagbar', 'github:tpope/vim-fugitive']
-    \ }
-NeoBundle 'github:vim-airline/vim-airline-themes' " airline themes
-" Terraform highlighting/completion
-NeoBundle 'github:juliosueiras/vim-terraform-completion', {'depends' :
-    \ ['github:hashivim/vim-terraform']
-    \ }
-NeoBundle 'github:pearofducks/ansible-vim' " Ansible highlighting
+    " Let dein manage dein
+    call dein#add(deindir)
 
-call neobundle#end()
+    "" My bundles
+    " @todo - once confirmed Neovim & python 3 module easy to obtain on AMZ, 
+    " RHEL, and CentOS: remove unite, neocomplcache & neocomplete
+    if !has('nvim') && v:version < 800
+        " Vim pre-version 8.0 - to remove at later date. Going to assume if 7.4
+        " then using non-lua package in AMZ, RHEL or CentOS
+        call dein#add('Shougo/neocomplcache') " completion
+        call dein#add('Shougo/unite.vim') " file/buffer/etc navigation
+    else
+        if has('python3')
+            call dein#add('Shougo/deoplete.nvim') " completion
+            call dein#add('Shougo/denite.nvim') " file/buffer/etc navigation
+            if !has('nvim')
+                " denite dependencies for Vim 8
+                call dein#add('roxma/nvim-yarp')
+                call dein#add('roxma/vim-hug-neovim-rpc')
+            endif
+        else
+            if has('lua') || has('nvim')
+                call dein#add('Shougo/neocomplete') " completion
+            else
+                call dein#add('Shougo/neocomplcache') " completion
+            endif
 
-" Disabled by NeoBundle, re-enable
-syntax on
+            call dein#add('Shougo/unite.vim') " file/buffer/etc navigation
+        endif
+        call dein#add('Shougo/neopairs.vim') " Auto insert pairs on complete
+        call dein#add('Shougo/context_filetype.vim') " Detect filetype in fenced code blocks
+        call dein#add('Shougo/neoinclude.vim') " Completion from includes etc
+    endif
+
+    call dein#add('jnurmine/Zenburn') " Zenburn color scheme
+    call dein#add('Raimondi/delimitMate') " delimiter closing
+    call dein#add('othree/html5.vim') " HTML5 syntax etc
+    call dein#add('chrisbra/NrrwRgn') " opens selected in split window
+    call dein#add('hotchpotch/perldoc-vim') " interface to perldoc
+    call dein#add('c9s/perlomni.vim') " perl omni completion
+    call dein#add('vim-perl/vim-perl') " perl syntax etc
+    call dein#add('StanAngeloff/php.vim') " php syntax etc
+    call dein#add('Aluriak/nerdcommenter') " easy line commenting
+    call dein#add('etdev/vim-hexcolor') " css colour highlight
+    call dein#add('pangloss/vim-javascript') " js syntax/indenting
+    call dein#add('nathanaelkane/vim-indent-guides') " indentation guides
+    call dein#add('elzr/vim-json') " json highlighting etc
+    call dein#add('terryma/vim-multiple-cursors') " Sublime-like multiple cursors
+    call dein#add('hynek/vim-python-pep8-indent') " correct Python indentation
+    call dein#add('iynaix/django.vim') " django template syntax highlighting
+    call dein#add('tpope/vim-surround') " easily change surroundings
+    call dein#add('vim-scripts/XSLT-syntax') " XSLT syntax highlighting
+    call dein#add('fatih/vim-go') " Go (golang) support
+    call dein#add('pearofducks/ansible-vim') " Ansible highlighting
+    " Syntax checking, requires external syntax checkers:
+    " https://github.com/scrooloose/syntastic/wiki/Syntax-Checkers
+    call dein#add('scrooloose/syntastic')
+    if !has('nvim')
+        call dein#add('ConradIrwin/vim-bracketed-paste') " Transparent pasting
+    endif
+    " better status/tabline; browse ctags; git wrapper
+    call dein#add('vim-airline/vim-airline', {'depends' :
+        \ ['majutsushi/tagbar', 'tpope/vim-fugitive']
+        \ })
+    call dein#add('vim-airline/vim-airline-themes') " airline themes
+    " Terraform highlighting/completion
+    call dein#add('juliosueiras/vim-terraform-completion', {'depends' :
+        \ ['hashivim/vim-terraform']
+        \ })
+
+    call dein#end()
+    call dein#save_state()
+endif
+
+" Disabled by Dein, re-enable
+syntax enable
 filetype on             " try to detect filetypes
 filetype plugin indent on   " enable loading indent file for filetype
 
 " Check for uninstalled bundles
-NeoBundleCheck
-"""<<< NeoBundle
+if dein#check_install()
+    call dein#install()
+endif
+
+"""<<< Dein
 
 
 """>>> Perl syntax
@@ -222,79 +241,8 @@ let g:zenburn_high_Contrast=1
 silent! colorscheme zenburn
 """<<< Zenburn
 
-if (has("lua"))
-    """>>> NeoComplete
-    let g:neocomplete#enable_at_startup = 1
-    let g:neocomplete#enable_smart_case = 1
-    let g:neocomplete#sources#syntax#min_keyword_length = 3
-    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
-
-    " Define dictionary.
-    let g:neocomplete#sources#dictionary#dictionaries = {
-        \ 'default' : '',
-        \ 'vimshell' : $HOME.'/.vimshell_hist',
-        \ 'scheme' : $HOME.'/.gosh_completions'
-            \ }
-
-    " Define keyword.
-    if !exists('g:neocomplete#keyword_patterns')
-        let g:neocomplete#keyword_patterns = {}
-    endif
-    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
-
-    " Plugin key-mappings.
-    inoremap <expr><C-g>     neocomplete#undo_completion()
-    inoremap <expr><C-l>     neocomplete#complete_common_string()
-
-    " Recommended key-mappings.
-    " <CR>: close popup and save indent.
-    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-    function! s:my_cr_function()
-        return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
-        " For no inserting <CR> key.
-        "return pumvisible() ? "\<C-y>" : "\<CR>"
-    endfunction
-    " <TAB>: completion.
-    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-    " <C-h>, <BS>: close popup and delete backword char.
-    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
-    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
-
-    " Enable omni completion.
-    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-
-    " Enable heavy omni completion.
-    if !exists('g:neocomplete#sources#omni#input_patterns')
-        let g:neocomplete#sources#omni#input_patterns = {}
-    endif
-    let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
-    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
-    let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-    " For perlomni.vim setting.
-    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
-    """<<< NeoComplete
-
-    """>>> Multiple Cursors
-    " Multiple cursors neocomplete conflict resolution
-    " Called once right before you start selecting multiple cursors
-    function! Multiple_cursors_before()
-    if exists(':NeoCompleteLock')==2
-        exe 'NeoCompleteLock'
-    endif
-    endfunction
-
-    " Called once only when the multiple selection is canceled (default <Esc>)
-    function! Multiple_cursors_after()
-    if exists(':NeoCompleteUnlock')==2
-        exe 'NeoCompleteUnlock'
-    endif
-    endfunction
-    """<<< Multiple Cursors
-else
+" @todo - remove neocomplcache & neocomplete once possible
+if (!has('nvim') && v:version < 800) || (!has('lua') && !has('nvim'))
     """>>> NeoComplCache
     let g:neocomplcache_enable_at_startup = 1
     let g:neocomplcache_enable_smart_case = 1
@@ -365,6 +313,112 @@ else
     function! Multiple_cursors_after()
     if exists(':NeoComplCacheUnlock')==2
         exe 'NeoComplCacheUnlock'
+    endif
+    endfunction
+    """<<< Multiple Cursors
+elseif has('python3')
+    """>>> Deoplete
+    let g:deoplete#enable_at_startup = 1
+	let g:deoplete#enable_smart_case = 1
+
+    " CR closes popup
+    " <CR>: close popup and save indent.
+	inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+	function! s:my_cr_function() abort
+        return deoplete#close_popup() . "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <silent><expr> <TAB>
+		\ pumvisible() ? "\<C-n>" :
+		\ <SID>check_back_space() ? "\<TAB>" :
+		\ deoplete#mappings#manual_complete()
+    function! s:check_back_space() abort
+		let col = col('.') - 1
+		return !col || getline('.')[col - 1]  =~ '\s'
+    endfunction
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+    """<<< Deoplete
+
+    """>>> Multiple Cursors
+    " Multiple cursors deoplete conflict resolution
+    function g:Multiple_cursors_before()
+        let g:deoplete#disable_auto_complete = 1
+    endfunction
+    function g:Multiple_cursors_after()
+        let g:deoplete#disable_auto_complete = 0
+    endfunction
+    """<<< Multiple Cursors
+else
+    """>>> NeoComplete
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#enable_smart_case = 1
+    let g:neocomplete#sources#syntax#min_keyword_length = 3
+    let g:neocomplete#lock_buffer_name_pattern = '\*ku\*'
+
+    " Define dictionary.
+    let g:neocomplete#sources#dictionary#dictionaries = {
+        \ 'default' : '',
+        \ 'vimshell' : $HOME.'/.vimshell_hist',
+        \ 'scheme' : $HOME.'/.gosh_completions'
+            \ }
+
+    " Define keyword.
+    if !exists('g:neocomplete#keyword_patterns')
+        let g:neocomplete#keyword_patterns = {}
+    endif
+    let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+
+    " Plugin key-mappings.
+    inoremap <expr><C-g>     neocomplete#undo_completion()
+    inoremap <expr><C-l>     neocomplete#complete_common_string()
+
+    " Recommended key-mappings.
+    " <CR>: close popup and save indent.
+    inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+    function! s:my_cr_function()
+        return (pumvisible() ? "\<C-y>" : "" ) . "\<CR>"
+        " For no inserting <CR> key.
+        "return pumvisible() ? "\<C-y>" : "\<CR>"
+    endfunction
+    " <TAB>: completion.
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    " <C-h>, <BS>: close popup and delete backword char.
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+
+    " Enable omni completion.
+    autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+    autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+    autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+    autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+    autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+    " Enable heavy omni completion.
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+    " For perlomni.vim setting.
+    let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+    """<<< NeoComplete
+
+    """>>> Multiple Cursors
+    " Multiple cursors neocomplete conflict resolution
+    " Called once right before you start selecting multiple cursors
+    function! Multiple_cursors_before()
+    if exists(':NeoCompleteLock')==2
+        exe 'NeoCompleteLock'
+    endif
+    endfunction
+
+    " Called once only when the multiple selection is canceled (default <Esc>)
+    function! Multiple_cursors_after()
+    if exists(':NeoCompleteUnlock')==2
+        exe 'NeoCompleteUnlock'
     endif
     endfunction
     """<<< Multiple Cursors

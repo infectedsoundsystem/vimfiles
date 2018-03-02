@@ -3,3 +3,9 @@
 
 # KDE directory pref files
 .directory
+
+# Dein installer
+installer.sh
+
+# Swap dir from Neovim
+swap/

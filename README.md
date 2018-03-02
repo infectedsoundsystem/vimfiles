@@ -1,11 +1,15 @@
 # Vim Configuration
 
 ## Dependencies
-Vim 7.4+ with Lua support
+Neovim with Python 3 module
+OR
+Vim 8.0+ with Lua support
+OR
+Vim 8.0+ without Lua support (soon to be removed from config)
+OR
+Vim 7.4+ with or without Lua support (soon to be removed from config)
 
-Git
-
-Exuberant Ctags
+Git, Lua, Exuberant Ctags, Python 3
 
 ### Font
 [Droid Sans Mono Slashed for Powerline](https://github.com/powerline/fonts/tree/master/DroidSansMonoSlashed): for gVim and terminal emulator on local machine (set this manually in terminal emulator), is patched for use by Airline.
