@@ -1,9 +1,3 @@
-# Ignore all plugins
-bundle/
-
-# Temp files
-temp/
-
 # Network editing history
 .netrwhist
 
