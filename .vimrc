@@ -247,9 +247,10 @@ silent! colorscheme zenburn
 """<<< Zenburn
 
 """>>> LanguageClient-neovim
-let g:LanguageClient_serverCommands = {
-    \ 'python': ['pyls'],
-    \ }
+let g:LanguageClient_serverCommands = {}
+if executable('pyls')
+    let g:LanguageClient_serverCommands.python = ['pyls']
+endif
 nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
