@@ -1,7 +1,7 @@
 # Vim Configuration
 
 ## Dependencies
-Neovim with Python 3 module
+Neovim with Python 3 module ( `pip3 install neovim` )
 OR
 Vim 8.0+ with Lua support
 OR

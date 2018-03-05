@@ -196,6 +196,11 @@ if dein#load_state(bundledir)
     call dein#add('juliosueiras/vim-terraform-completion', {'depends' :
         \ ['hashivim/vim-terraform']
         \ })
+    " LSP support
+    call dein#add('autozimu/LanguageClient-neovim', {
+        \ 'rev': 'next',
+        \ 'build': 'bash install.sh',
+        \ })
 
     call dein#end()
     call dein#save_state()
@@ -240,6 +245,15 @@ endif
 let g:zenburn_high_Contrast=1
 silent! colorscheme zenburn
 """<<< Zenburn
+
+""">>> LanguageClient-neovim
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ }
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+"""<<< LanguageClient-neovim
 
 " @todo - remove neocomplcache & neocomplete once possible
 if (!has('nvim') && v:version < 800) || (!has('lua') && !has('nvim'))
