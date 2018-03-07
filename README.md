@@ -1,7 +1,9 @@
 # Vim Configuration
 
+Vim 7.4 configuration - no longer updated. For Neovim/Vim 8+ configuration, see [infectedsoundsystem/nvimfiles](https://github.com/infectedsoundsystem/nvimfiles).
+
 ## Dependencies
-Vim 7.4+ with Lua support
+Vim 7.4 with Lua support
 
 Git
 
